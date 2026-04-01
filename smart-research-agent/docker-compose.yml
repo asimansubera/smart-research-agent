@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: smart-research-agent:latest
+    container_name: smart-research-agent
+    stdin_open: true
+    tty: true
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - AGENT_USER_ID=${AGENT_USER_ID:-docker-user}
+    volumes:
+      - agent_data:/app/data
+    restart: "no"
+
+volumes:
+  agent_data:
+    driver: local
